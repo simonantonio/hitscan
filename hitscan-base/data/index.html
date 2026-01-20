@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏁 Race Timer</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🏁 FPV Race Timer</h1>
+        <div class="status-bar">
+          <span id="status">IDLE</span>
+          <span id="connection">●</span>
+        </div>
+      </header>
+
+      <div class="controls">
+        <div class="mode-selector">
+          <button id="modeRace" class="btn btn-mode active">RACE MODE</button>
+          <button id="modeLap" class="btn btn-mode">LAP TIMER</button>
+        </div>
+        <div class="race-controls">
+          <button id="startBtn" class="btn btn-start">START</button>
+          <button id="stopBtn" class="btn btn-stop" disabled>STOP</button>
+          <button id="resetBtn" class="btn btn-reset">RESET</button>
+        </div>
+      </div>
+
+      <div class="timer-display" id="raceTimer">00:00.000</div>
+
+      <div class="results-container">
+        <h2>Race Results</h2>
+        <div id="results" class="results-grid">
+          <div class="no-results">Waiting for race to start...</div>
+        </div>
+      </div>
+
+      <div class="racer-grid">
+        <div class="racer-grid-header">
+          <h3>Racer Configuration</h3>
+          <button id="editRacersBtn" class="btn btn-small">Edit Names</button>
+        </div>
+        <div class="racers">
+          <div class="racer-card" data-racer="0">
+            <div class="racer-number">0</div>
+            <div class="racer-name">Racer 0</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="1">
+            <div class="racer-number">1</div>
+            <div class="racer-name">Racer 1</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="2">
+            <div class="racer-number">2</div>
+            <div class="racer-name">Racer 2</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="3">
+            <div class="racer-number">3</div>
+            <div class="racer-name">Racer 3</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="4">
+            <div class="racer-number">4</div>
+            <div class="racer-name">Racer 4</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="5">
+            <div class="racer-number">5</div>
+            <div class="racer-name">Racer 5</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="6">
+            <div class="racer-number">6</div>
+            <div class="racer-name">Racer 6</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+          <div class="racer-card" data-racer="7">
+            <div class="racer-number">7</div>
+            <div class="racer-name">Racer 7</div>
+            <div class="racer-status">Waiting</div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="stats">
+          <span>Last Update: <span id="lastUpdate">--</span></span>
+          <span>WiFi: <span id="wifiInfo">Connected</span></span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
