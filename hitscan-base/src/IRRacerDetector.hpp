@@ -15,7 +15,8 @@
 // ============================================================================
 // IR Detector Class
 // ============================================================================
-class IRRacerDetector {
+class IRRacerDetector
+{
 private:
     const uint8_t irPin;
 
@@ -32,37 +33,50 @@ private:
     static constexpr unsigned long LONG_GAP_MAX = 780;
     static constexpr unsigned long TIMEOUT_US = 2000;
 
-    unsigned long measurePulse(bool level, unsigned long timeout) {
+    // Fast inline measurement (runs on Core 1, uninterrupted)
+    inline unsigned long measurePulse(bool level, unsigned long timeout)
+    {
         unsigned long start = micros();
-        while(digitalRead(irPin) == level) {
-            if(micros() - start > timeout) return 0;
+        while (digitalRead(irPin) == level)
+        {
+            if (micros() - start > timeout)
+                return 0;
         }
         return micros() - start;
     }
 
-    bool detectSync() {
+    bool detectSync()
+    {
         unsigned long timeout = millis() + 100;
-        while(digitalRead(irPin) == HIGH) {
-            if(millis() > timeout) return false;
+        while (digitalRead(irPin) == HIGH)
+        {
+            if (millis() > timeout)
+                return false;
         }
 
         unsigned long burst = measurePulse(LOW, TIMEOUT_US);
-        if(burst < SYNC_BURST_MIN || burst > SYNC_BURST_MAX) return false;
+        if (burst < SYNC_BURST_MIN || burst > SYNC_BURST_MAX)
+            return false;
 
         unsigned long gap = measurePulse(HIGH, TIMEOUT_US);
-        if(gap < SYNC_GAP_MIN || gap > SYNC_GAP_MAX) return false;
+        if (gap < SYNC_GAP_MIN || gap > SYNC_GAP_MAX)
+            return false;
 
         return true;
     }
 
-    int readBit() {
+    int readBit()
+    {
         unsigned long burst = measurePulse(LOW, TIMEOUT_US);
-        if(burst < BIT_BURST_MIN || burst > BIT_BURST_MAX) return -1;
+        if (burst < BIT_BURST_MIN || burst > BIT_BURST_MAX)
+            return -1;
 
         unsigned long gap = measurePulse(HIGH, TIMEOUT_US);
 
-        if(gap >= SHORT_GAP_MIN && gap <= SHORT_GAP_MAX) return 0;
-        if(gap >= LONG_GAP_MIN && gap <= LONG_GAP_MAX) return 1;
+        if (gap >= SHORT_GAP_MIN && gap <= SHORT_GAP_MAX)
+            return 0;
+        if (gap >= LONG_GAP_MIN && gap <= LONG_GAP_MAX)
+            return 1;
 
         return -1;
     }
@@ -70,21 +84,27 @@ private:
 public:
     IRRacerDetector(uint8_t pin) : irPin(pin) {}
 
-    void begin() {
+    void begin()
+    {
         pinMode(irPin, INPUT);
     }
 
-    int decode() {
-        if(!detectSync()) return -1;
+    int decode()
+    {
+        if (!detectSync())
+            return -1;
 
         int bit2 = readBit();
-        if(bit2 < 0) return -1;
+        if (bit2 < 0)
+            return -1;
 
         int bit1 = readBit();
-        if(bit1 < 0) return -1;
+        if (bit1 < 0)
+            return -1;
 
         int bit0 = readBit();
-        if(bit0 < 0) return -1;
+        if (bit0 < 0)
+            return -1;
 
         return (bit2 << 2) | (bit1 << 1) | bit0;
     }
